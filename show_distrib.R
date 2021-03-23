@@ -19,7 +19,8 @@ show.dist <- function(data, varname, groups, color=NULL, ytitle=varname,
 			  legend.justification=c(1, 1),
 			  axis.title.y=element_blank(),
 			  axis.text.y=element_blank(), 
-			  axis.ticks.y=element_blank()) +
+			  axis.ticks.y=element_blank(),
+			  plot.background=element_blank()) +
 		scale_color_discrete(name=legendtitle)
 	if ( !is.null(color) ) {
 		P1 <- P1 + scale_fill_manual(values=color)
@@ -33,6 +34,4 @@ show.dist <- function(data, varname, groups, color=NULL, ytitle=varname,
 	grid.draw(P)
 	return(P)
 }
-
-
 

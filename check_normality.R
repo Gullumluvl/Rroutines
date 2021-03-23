@@ -1,8 +1,8 @@
 # Function to check if data is following normal distribution, and prints a few
 # plots
 
-check.norm  <- function(D, data.name=deparse(substitute(D))) {
-	write(paste("data name:", data.name) , stdout())
+check.norm  <- function(D, data.name="") {
+	write(paste("data:", data.name, "(", deparse(substitute(D)), ")") , stdout())
 	write(paste("data class:", data.class(D)), stdout())
 	if (data.class(D) != "numeric") {
 		write("Converting data to numeric", stdout())
@@ -16,9 +16,10 @@ check.norm  <- function(D, data.name=deparse(substitute(D))) {
 	sht <- shapiro.test(D)
 	write(paste(sht$method, " p-val =", sht$p.value), stdout())
 	dev.new()
+	oldpar <- par()
 	layout(matrix(c(1,2,1,2), 2, 2))
-	plot(density(D), col='red', main=paste("Distribution of", data.name,
-										   "VS normal distribution"))
+	plot(density(D, na.rm=T), col='red', main=paste("Distribution of",
+								data.name, "VS normal distribution"))
 	
 	x <- seq(S["Min."], S["Max."], length=500)
 	y <- dnorm(x, mean=S["Mean"], sd=sd)
@@ -27,6 +28,7 @@ check.norm  <- function(D, data.name=deparse(substitute(D))) {
 	qqnorm(D)
 	qqline(D)
 	write("---", stdout())
+	par(oldpar)
 }
 
 
